@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cockpit-design-aesthetics"
+version = "0.1.0"
+description = "Cockpit instrument panel design vocabulary MCP server"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    {name = "Dal", email = "dal@lushy.ai"}
+]
+dependencies = [
+    "fastmcp>=0.1.0",
+    "pyyaml",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-asyncio>=0.21.0",
+]
+
+[project.scripts]
+cockpit-design-aesthetics = "cockpit_design_aesthetics.server:mcp"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages]
+find = {where = ["src"]}
+
+[tool.setuptools.package-data]
+cockpit_design_aesthetics = ["ologs/*.yaml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+asyncio_mode = "auto"

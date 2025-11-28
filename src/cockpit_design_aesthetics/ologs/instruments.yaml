@@ -1,0 +1,490 @@
+# Cockpit Design Aesthetics - Instrument Taxonomies (OLOG)
+# Layer 1: Pure deterministic taxonomy mapping
+# No LLM cost - all lookups pre-computed
+
+# INSTRUMENT DEFINITIONS
+# Organized by functional category
+
+instruments:
+  flight_instruments:
+    attitude_indicator:
+      name: "Attitude Indicator (Artificial Horizon)"
+      aliases: ["gyro horizon", "artificial horizon"]
+      function: "Displays pitch and roll relative to horizon"
+      visual_elements:
+        - "artificial horizon line"
+        - "aircraft symbol (wings) at center"
+        - "pitch scale markings"
+        - "roll scale around perimeter"
+      color_scheme:
+        sky: "#87CEEB"
+        earth: "#8B4513"
+        indicators: "#000000"
+      typical_position: "primary_center"
+      criticality: "critical"
+      era_availability:
+        mechanical: true
+        glass_cockpit: true
+
+    altimeter:
+      name: "Altimeter"
+      aliases: ["altitude indicator"]
+      function: "Displays current altitude above sea level"
+      visual_elements:
+        - "rotating drum (thousands of feet)"
+        - "needle (hundreds of feet)"
+        - "altitude numbers around dial"
+      color_scheme:
+        background: "#FFFFFF"
+        numbers: "#000000"
+        needles: "#000000"
+        warning_bands: "#FFFF00"
+      typical_position: "primary_right"
+      criticality: "critical"
+      warning_zones:
+        minimum_safe: "1500ft"
+        caution: "#FFFF00"
+
+    airspeed_indicator:
+      name: "Airspeed Indicator"
+      aliases: ["speed indicator", "ASI"]
+      function: "Displays aircraft velocity through air"
+      visual_elements:
+        - "rotating needle"
+        - "speed markings (knots)"
+        - "color-coded arcs"
+      color_scheme:
+        background: "#FFFFFF"
+        numbers: "#000000"
+        needle: "#000000"
+        green_arc: "#00AA00"
+        yellow_arc: "#FFFF00"
+        red_line: "#FF0000"
+      typical_position: "primary_left"
+      criticality: "critical"
+      speed_arcs:
+        flap_operating: "white"
+        normal_operating: "green"
+        caution: "yellow"
+        never_exceed: "red"
+
+    heading_indicator:
+      name: "Heading Indicator (DG)"
+      aliases: ["directional gyro", "DG", "HSI in glass cockpits"]
+      function: "Displays magnetic compass heading"
+      visual_elements:
+        - "rotating card with compass rose"
+        - "fixed aircraft symbol pointing up"
+        - "heading numbers (000-360)"
+      color_scheme:
+        background: "#FFFFFF"
+        numbers: "#000000"
+        north: "#FF0000"
+      typical_position: "primary_bottom_center"
+      criticality: "critical"
+
+    vertical_speed_indicator:
+      name: "Vertical Speed Indicator"
+      aliases: ["VSI", "variometer", "rate of climb"]
+      function: "Displays rate of climb or descent"
+      visual_elements:
+        - "needle indicating ft/min"
+        - "zero point at center"
+        - "positive and negative markings"
+      color_scheme:
+        background: "#FFFFFF"
+        numbers: "#000000"
+        needle: "#000000"
+      typical_position: "primary_bottom_right"
+      criticality: "important"
+
+    turn_coordinator:
+      name: "Turn Coordinator"
+      aliases: ["turn indicator", "slip/skid indicator"]
+      function: "Displays turn rate and coordination"
+      visual_elements:
+        - "miniature aircraft rotating left/right"
+        - "rate of turn scale"
+        - "slip/skid ball"
+      color_scheme:
+        background: "#FFFFFF"
+        aircraft: "#000000"
+        ball: "white"
+      typical_position: "primary_bottom_left"
+      criticality: "important"
+
+  engine_instruments:
+    tachometer:
+      name: "Tachometer"
+      aliases: ["RPM indicator", "prop RPM"]
+      function: "Displays engine revolutions per minute"
+      visual_elements:
+        - "needle indicating RPM"
+        - "green arc for normal operations"
+        - "red line for maximum"
+      color_scheme:
+        background: "#FFFFFF"
+        numbers: "#000000"
+        green_arc: "#00AA00"
+        red_line: "#FF0000"
+      typical_position: "engine_cluster"
+      criticality: "critical"
+
+    manifold_pressure_gauge:
+      name: "Manifold Pressure Gauge"
+      aliases: ["MAP gauge", "boost gauge"]
+      function: "Displays engine manifold air pressure"
+      visual_elements:
+        - "needle indicating pressure"
+        - "green arc"
+        - "pressure scale (inches Hg)"
+      color_scheme:
+        background: "#FFFFFF"
+        green_arc: "#00AA00"
+      typical_position: "engine_cluster"
+      criticality: "important"
+
+    fuel_quantity:
+      name: "Fuel Quantity Indicator"
+      aliases: ["fuel gauge", "fuel levels"]
+      function: "Displays fuel remaining in tanks"
+      visual_elements:
+        - "needle for each tank"
+        - "gallons/pounds scale"
+        - "E (empty) to F (full)"
+      color_scheme:
+        background: "#FFFFFF"
+        empty_warning: "#FF0000"
+      typical_position: "engine_cluster"
+      criticality: "critical"
+
+    oil_temperature:
+      name: "Oil Temperature Gauge"
+      aliases: ["CHT", "coolant temp"]
+      function: "Displays engine cooling system temperature"
+      visual_elements:
+        - "needle indicating temperature"
+        - "green arc for normal range"
+      color_scheme:
+        background: "#FFFFFF"
+        green_arc: "#00AA00"
+        red_line: "#FF0000"
+      typical_position: "engine_cluster"
+      criticality: "important"
+
+    oil_pressure:
+      name: "Oil Pressure Gauge"
+      aliases: ["oil pressure indicator"]
+      function: "Displays engine oil pressure"
+      visual_elements:
+        - "needle indicating PSI"
+        - "green arc"
+      color_scheme:
+        background: "#FFFFFF"
+        green_arc: "#00AA00"
+        red_line: "#FF0000"
+      typical_position: "engine_cluster"
+      criticality: "critical"
+
+  navigation_instruments:
+    vor_indicator:
+      name: "VOR Indicator"
+      aliases: ["OBS", "nav indicator"]
+      function: "Displays course deviation and VOR navigation"
+      visual_elements:
+        - "rotating course selector"
+        - "vertical deviation needle"
+        - "TO/FROM flag"
+      color_scheme:
+        background: "#FFFFFF"
+        needle: "#000000"
+      typical_position: "navigation_cluster"
+      criticality: "important"
+
+    dme:
+      name: "DME Indicator"
+      aliases: ["distance measuring equipment"]
+      function: "Displays distance to navigation station"
+      visual_elements:
+        - "digital readout of nautical miles"
+        - "ground speed"
+        - "time to station"
+      color_scheme:
+        background: "#FFFFFF"
+        numbers: "#000000"
+      typical_position: "navigation_cluster"
+      criticality: "secondary"
+
+    adf_indicator:
+      name: "ADF Indicator"
+      aliases: ["automatic direction finder", "NDB indicator"]
+      function: "Displays bearing to radio beacon"
+      visual_elements:
+        - "rotating card with compass"
+        - "needle pointing to station"
+      color_scheme:
+        background: "#FFFFFF"
+        needle: "#FF0000"
+      typical_position: "navigation_cluster"
+      criticality: "secondary"
+
+  systems_instruments:
+    ammeter:
+      name: "Ammeter"
+      aliases: ["electrical load", "charging indicator"]
+      function: "Displays electrical charging/load status"
+      visual_elements:
+        - "needle showing positive/negative amps"
+        - "zero point at center"
+      color_scheme:
+        background: "#FFFFFF"
+        discharge: "#FF0000"
+        charge: "#00AA00"
+      typical_position: "systems_cluster"
+      criticality: "important"
+
+    vacuum_pressure:
+      name: "Vacuum/Pressure Gauge"
+      aliases: ["suction gauge", "system vacuum"]
+      function: "Displays vacuum for instrument operation"
+      visual_elements:
+        - "needle showing inches of mercury"
+        - "normal operating range marked"
+      color_scheme:
+        background: "#FFFFFF"
+        green_arc: "#00AA00"
+      typical_position: "systems_cluster"
+      criticality: "important"
+
+# POSITIONING LOGIC
+# How instruments are arranged spatially
+
+positioning:
+  primary_scan_area:
+    description: "Centered, at eye level - instruments checked most frequently"
+    instruments:
+      - attitude_indicator  # Center, anchors the scan
+      - airspeed_indicator  # Left of attitude
+      - altimeter           # Right of attitude
+      - vertical_speed      # Below right
+      - heading_indicator   # Below center
+      - turn_coordinator    # Below left
+    visual_principles:
+      - "Forms a T-shape or 6-instrument standard"
+      - "Minimal eye movement between critical instruments"
+      - "Attitude indicator is the anchor point"
+      - "Altitude and airspeed flank attitude for quick cross-check"
+
+  engine_cluster:
+    description: "Grouped instruments monitoring engine performance"
+    position_relative_to: "below or to the right of primary instruments"
+    instruments:
+      - tachometer          # Top
+      - manifold_pressure   # Next to tach
+      - fuel_quantity       # Below
+      - oil_temperature     # Below
+      - oil_pressure        # Below
+    visual_principles:
+      - "Organized vertically or in rows"
+      - "RPM instruments at top (checked first)"
+      - "Temperature/pressure below"
+
+  navigation_cluster:
+    description: "Radio and navigation instruments grouped together"
+    position_relative_to: "right side or lower right"
+    instruments:
+      - vor_indicator       # Primary nav
+      - dme                 # Secondary
+      - adf_indicator       # Secondary
+    visual_principles:
+      - "Usually right of primary instruments"
+      - "Grouped with communication radios"
+
+  systems_cluster:
+    description: "System status and electrical indicators"
+    position_relative_to: "bottom center or lower left"
+    instruments:
+      - ammeter
+      - vacuum_pressure
+    visual_principles:
+      - "Often in lower sections"
+      - "Less critical during stable flight"
+
+# SCANNING PATTERNS
+# How pilots scan the instruments
+
+scan_patterns:
+  instrument_flight:
+    description: "Standard scan when flying solely by instruments"
+    sequence:
+      1: "Attitude indicator (primary reference)"
+      2: "Altimeter and altitude trend"
+      3: "Airspeed (maintain)"
+      4: "Vertical speed (trend)"
+      5: "Heading (maintain)"
+      6: "Turn coordinator (coordination)"
+      7: "Engine instruments"
+    scan_rate: "roughly 5 seconds per complete cycle"
+
+  vfr_cruise:
+    description: "Scanning pattern for visual flight"
+    sequence:
+      1: "Outside view (primary)"
+      2: "Attitude/altitude cross-check"
+      3: "Engine instruments"
+      4: "Navigation"
+    scan_rate: "more time outside than inside"
+
+  approach_landing:
+    description: "Intensive scanning during approach phase"
+    sequence:
+      1: "Attitude indicator"
+      2: "Altitude and descent rate"
+      3: "Airspeed"
+      4: "Heading"
+      5: "Engine instruments"
+      6: "Navigation instruments (ILS/approach)"
+    scan_rate: "rapid, frequent returns to attitude"
+
+# COLOR CONVENTIONS
+# Standard color usage in cockpits
+
+color_standards:
+  warning:
+    color: "#FF0000"
+    meaning: "Critical condition - immediate action required"
+    usage: "Red lines, warning flags, limit indicators"
+
+  caution:
+    color: "#FFFF00"
+    meaning: "Attention needed - take action soon"
+    usage: "Yellow arcs, yellow markings"
+
+  safe_normal:
+    color: "#00AA00"
+    meaning: "Normal operating range"
+    usage: "Green arcs on gauges"
+
+  information:
+    color: "#FFFFFF"
+    meaning: "Neutral data"
+    usage: "Gauge backgrounds, scale markings"
+
+  text:
+    color: "#000000"
+    meaning: "Primary text/numbers"
+    usage: "Labels, scale numbers"
+
+# AIRCRAFT TYPES - PANEL CONFIGURATIONS
+
+aircraft_types:
+  general_aviation_singles:
+    examples: ["Cessna 172", "Piper Cherokee", "Diamond DA40"]
+    instrument_configuration: "basic_six"
+    panel_complexity: "simple"
+    typical_instruments:
+      essential:
+        - attitude_indicator
+        - altimeter
+        - airspeed_indicator
+        - heading_indicator
+        - vertical_speed_indicator
+        - turn_coordinator
+      engine:
+        - tachometer
+        - fuel_quantity
+        - oil_temperature
+        - oil_pressure
+      systems:
+        - ammeter
+        - vacuum_pressure
+
+  general_aviation_twins:
+    examples: ["Piper Seneca", "Beechcraft Baron", "Cessna 310"]
+    instrument_configuration: "basic_six_plus_engines"
+    panel_complexity: "moderate"
+    added_instruments:
+      - additional_engine_instruments
+      - dual_fuel_system
+      - electrical_redundancy
+
+  light_commercial:
+    examples: ["Beechcraft King Air", "Piper Navajo"]
+    instrument_configuration: "glass_cockpit_hybrid"
+    panel_complexity: "moderate_high"
+
+  commercial_airliners:
+    examples: ["Boeing 737", "Airbus A320", "Embraer E190"]
+    instrument_configuration: "glass_cockpit"
+    panel_complexity: "high"
+    features:
+      - primary_flight_display
+      - navigation_display
+      - engine_parameters_display
+      - systems_synoptic
+
+  fighter_jets:
+    examples: ["F-16", "F-22", "Gripen"]
+    instrument_configuration: "glass_cockpit_hud"
+    panel_complexity: "very_high"
+    features:
+      - head_up_display
+      - integrated_avionics
+      - threat_warning
+      - weapon_system_integration
+
+  helicopters:
+    examples: ["Bell 407", "Robinson R44", "AH-64"]
+    instrument_configuration: "basic_six_modified"
+    panel_complexity: "moderate"
+    modifications:
+      - rotor_rpm_instead_engine_rpm
+      - collective_pitch_indicator
+      - hydraulic_system_monitoring
+
+# ERAS - PANEL DESIGN EVOLUTION
+
+eras:
+  analog_mechanical:
+    period: "1930s-1990s"
+    description: "Mechanical instruments, steam-driven gyros"
+    visual_characteristics:
+      - "Three-pointer gauges"
+      - "Rotating drums for altitude"
+      - "Physical needles"
+      - "Printed scales"
+    materials:
+      - "Metal faces"
+      - "Glass covers"
+      - "Aluminum bezels"
+
+  glass_cockpit:
+    period: "1990s-present"
+    description: "Electronic displays replacing mechanical gauges"
+    visual_characteristics:
+      - "Liquid crystal displays"
+      - "Digital readouts"
+      - "Vector graphics"
+      - "Dynamic rendering"
+    advantages:
+      - "Consolidated information"
+      - "Redundancy"
+      - "Less physical space"
+
+  hud_integration:
+    period: "2000s-present"
+    description: "Head-up displays for tactical aircraft"
+    visual_characteristics:
+      - "Transparent display in pilot line of sight"
+      - "Integrated threat information"
+      - "Targeting data"
+      - "Integrated with heads-down displays"
+
+  modern_synthetic_vision:
+    period: "2010s-present"
+    description: "3D synthetic terrain, night vision integration"
+    visual_characteristics:
+      - "3D terrain rendering"
+      - "Enhanced vision systems"
+      - "Integrated weather overlay"
+      - "Datalink integration"
